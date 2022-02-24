@@ -6,7 +6,32 @@
     <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 <body>
-    <p>Her kommer det et spill! :)</p>
-    <p>Du kan følge med på utviklingen på <a href="https://github.com/gummangummangumman/telegram-game">github</a>.</p>
-    <button onclick="TelegramGameProxy.shareScore()">Share score</button>
+
+    <div id="game">
+        <p id="counter">0</p>
+        <p>
+            <button onclick="minus()">-</button>
+            <button onclick="plus()">+</button>
+        </p>
+
+        <p>
+            <button onclick="finish()">finish</button>
+        </p>
+    </div>
+    
+
+    <div id="game_over" style="display: none;">
+
+        <p>score: <span id="game_over_counter">0</span></p>
+        
+        <button onclick="play_again()">play again</button>
+        <br />
+        <br />
+        <button onclick="TelegramGameProxy.shareScore()">Share score</button>
+
+        <p>Dette spillet er ikke helt ferdig! :)</p>
+        <p>Du kan følge med på utviklingen på <a href="https://github.com/gummangummangumman/telegram-game">github</a>.</p>
+    </div>
+
+    
 </body>
