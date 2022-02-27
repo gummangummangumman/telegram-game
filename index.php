@@ -13,8 +13,20 @@ $baseurl = "https://api.telegram.org/bot".$bot_token;
 $update = file_get_contents("php://input");
 $update_array = json_decode($update, true);
 
+if (!empty($update_array["score"]))
+{
+    require "post_highscore.php";
+    post_highscore($baseurl, $update_array);
+    return;
+}
+
 $callback_query_id = $update_array["callback_query"]["id"];
-file_get_contents($baseurl."/answerCallbackQuery?callback_query_id=".$callback_query_id."&url=".$game_url);
+
+if (!empty($callback_query_id))
+{
+    file_get_contents($baseurl."/answerCallbackQuery?callback_query_id=".$callback_query_id."&url=".$game_url);
+    return;
+}
 
 
 $from_chat = $update_array["message"]["chat"]["id"];
