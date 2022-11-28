@@ -1,4 +1,5 @@
 const API_BASE_URL = window.location.toString().substring(0, window.location.toString().indexOf("game/"));
+const API_ENDPOINT_POST_HIGHSCORE = API_BASE_URL + "highscore";
 const curData = (location.hash || '').substring(1).replace(/[\?&].*/g, '');
 let counter = 0;
 
@@ -34,7 +35,7 @@ function play_again() {
 
 // kode under inspirert av Corsairs - https://tbot.xyz/corsairs/game.js?19
 function send_score() {
-    post(API_BASE_URL, {
+    post(API_ENDPOINT_POST_HIGHSCORE, {
         score: counter,
         curData: curData
     });
@@ -42,19 +43,15 @@ function send_score() {
 
 function post(url, data) {
     var xhr = new XMLHttpRequest();
-    var body = []
-    for(var i in data) {
-      body.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
-      console.log("pushing " + encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
-    }
-    xhr.onreadystatechange = function() {
-      if(xhr.readyState == 4 && xhr.status == 200) {
-        console.log(JSON.parse(xhr.responseText));
+    console.log(`posting score to url ${url}`, data);
+    xhr.onload = function() {
+      if (xhr.status == 200) {
+        console.log("posted score successfully", JSON.parse(xhr.responseText));
       } else {
-        console.log("epic fail");
+        console.log("posting score seemed to fail", JSON.parse(xhr.responseText));
       }
     }
     xhr.open("POST", url, true);
-    xhr.send(body.join('&'));
+    xhr.send(JSON.stringify(data));
   }
   

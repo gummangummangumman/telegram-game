@@ -13,13 +13,6 @@ $baseurl = "https://api.telegram.org/bot".$bot_token;
 $update = file_get_contents("php://input");
 $update_array = json_decode($update, true);
 
-if (!empty($update_array["score"]))
-{
-    require "post_highscore.php";
-    post_highscore($baseurl, $update_array);
-    return;
-}
-
 $callback_query_id = $update_array["callback_query"]["id"];
 
 if (!empty($callback_query_id))
