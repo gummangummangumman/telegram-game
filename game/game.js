@@ -33,11 +33,12 @@ function play_again() {
     document.getElementById("game_over").setAttribute("style", "display: none;");
 }
 
-// kode under inspirert av Corsairs - https://tbot.xyz/corsairs/game.js?19
 function send_score() {
     post(API_ENDPOINT_POST_HIGHSCORE, {
         score: counter,
-        curData: curData
+        chat: TelegramGameProxy.initParams.chat,
+        user: TelegramGameProxy.initParams.user,
+        id: TelegramGameProxy.initParams.id
     });
 }
 
@@ -46,9 +47,13 @@ function post(url, data) {
     console.log(`posting score to url ${url}`, data);
     xhr.onload = function() {
       if (xhr.status == 200) {
-        console.log("posted score successfully", JSON.parse(xhr.responseText));
+        console.log("posted score successfully");
       } else {
-        console.log("posting score seemed to fail", JSON.parse(xhr.responseText));
+        try {
+            console.error("posting score seemed to fail", JSON.parse(xhr.responseText));
+        } catch (error) {
+            console.error("posting score seemed to fail", xhr.responseText);
+        }
       }
     }
     xhr.open("POST", url, true);

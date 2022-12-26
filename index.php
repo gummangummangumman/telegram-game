@@ -22,9 +22,12 @@ $update_array = json_decode($update, true);
 $callback_query_id = $update_array["callback_query"]["id"];
 
 if (!empty($callback_query_id)) {
+    $chat_instance = $update_array["callback_query"]["chat_instance"];
+    $user_id = $update_array["callback_query"]["from"]["id"];
+
     return Request::answerCallbackQuery([
         'callback_query_id' => $callback_query_id,
-        'url' => $game_url
+        'url' => $game_url . "#id=" . $callback_query_id . "&chat=" . $chat_instance . "&user=" . $user_id,
     ]);
 }
 

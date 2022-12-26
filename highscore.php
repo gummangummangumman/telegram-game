@@ -1,6 +1,10 @@
 <?php
 
 require "dotenv.php";
+require __DIR__ . '/vendor/autoload.php';
+
+use Longman\TelegramBot\Request;
+use Longman\TelegramBot\Telegram as TelegramBot;
 
 (new DotEnv(__DIR__ . '/.env'))->load();
 
@@ -8,6 +12,8 @@ $bot_token = getenv("BOT_TOKEN");
 $bot_name = getenv("BOT_NAME");
 $game_name = getenv("GAME_NAME");
 $game_url = getenv("GAME_URL");
+
+$telegram = new TelegramBot($bot_token, $bot_name);
 
 $baseurl = "https://api.telegram.org/bot" . $bot_token;
 $update = file_get_contents("php://input");
@@ -22,30 +28,35 @@ if (empty($update_array["score"])) {
     return;
 }
 
-$response = new stdClass();
-$url = post_highscore($baseurl, $update_array);
-
-$response->message = "Hello.";
-$response->url = $url;
-echo json_encode($response);
+$response = post_highscore($baseurl, $update_array);
+if ($response == true) {
+    //setGameScore returns true on errors
+    http_response_code(400);
+    return $response;
+} else {
+    return $response;
+}
 
 function post_highscore($baseurl, $data)
 {
+    $id = $data["id"];
+    $chat_id = $data["chat"];
+    $user_id = $data["user"];
 
     $score = $data["score"];
-    $curData = $data["curData"];
-
     $legal_score = min($score, 5);
 
-    $decoded_url = explode("//", urldecode($curData))[1];
+    //TODO finn ut hvorfor dette ikke fungerer.
+    //var en annen som hadde problem med samme metode: https://github.com/php-telegram-bot/core/issues/1248
 
-    //TODO få tak i user_id
-    $user_id = "123";
-
-    $full_url = $baseurl . "/setGameScore?user_id=" . $user_id . "&score=" . $legal_score;
-
-    $file = file_get_contents($full_url);
-    return urldecode($curData);
+    return Request::setGameScore([
+        'message_id' => $chat_id,
+        'peer' => $chat_id,
+        'user_id' => $user_id,
+        'id' => $id,
+        'edit_message' => 'true',
+        'score' => $legal_score,
+    ]);
 }
 
 ?>
