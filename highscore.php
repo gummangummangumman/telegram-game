@@ -9,12 +9,11 @@ $bot_name = getenv("BOT_NAME");
 $game_name = getenv("GAME_NAME");
 $game_url = getenv("GAME_URL");
 
-$baseurl = "https://api.telegram.org/bot".$bot_token;
+$baseurl = "https://api.telegram.org/bot" . $bot_token;
 $update = file_get_contents("php://input");
 $update_array = json_decode($update, true);
 
-if (empty($update_array["score"]))
-{
+if (empty($update_array["score"])) {
     http_response_code(400);
     $error = new stdClass();
     $error->error = "No score submitted!";
@@ -30,10 +29,11 @@ $response->message = "Hello.";
 $response->url = $url;
 echo json_encode($response);
 
-function post_highscore($baseurl, $data) {
+function post_highscore($baseurl, $data)
+{
 
     $score = $data["score"];
-    $curData = $data["curData"];    
+    $curData = $data["curData"];
 
     $legal_score = min($score, 5);
 
@@ -42,7 +42,7 @@ function post_highscore($baseurl, $data) {
     //TODO få tak i user_id
     $user_id = "123";
 
-    $full_url = $baseurl."/setGameScore?user_id=".$user_id."&score=".$legal_score;    
+    $full_url = $baseurl . "/setGameScore?user_id=" . $user_id . "&score=" . $legal_score;
 
     $file = file_get_contents($full_url);
     return urldecode($curData);
