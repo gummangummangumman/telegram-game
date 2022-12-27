@@ -34,7 +34,8 @@ function play_again() {
 }
 
 function get_scores() {
-    get(`${API_ENDPOINT_POST_HIGHSCORE}?chat=${TelegramGameProxy.initParams.chat}&user=${TelegramGameProxy.initParams.user}`);
+    get(`${API_ENDPOINT_POST_HIGHSCORE}?chat=${TelegramGameProxy.initParams.chat}&user=${TelegramGameProxy.initParams.user}\
+            &message=${TelegramGameProxy.initParams.message}&inline=${TelegramGameProxy.initParams.inline}`);
 }
 
 function send_score() {
@@ -42,7 +43,9 @@ function send_score() {
         score: counter,
         chat: TelegramGameProxy.initParams.chat,
         user: TelegramGameProxy.initParams.user,
-        id: TelegramGameProxy.initParams.id
+        message: TelegramGameProxy.initParams.message,
+        inline: TelegramGameProxy.initParams.inline,
+        instance: TelegramGameProxy.initParams.instance,
     });
 }
 

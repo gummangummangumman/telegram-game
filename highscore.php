@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query_params = array(
         "chat_id" => $_GET["chat"],
         "user_id" => $_GET["user"],
+        "message_id" => $_GET["message"],
+        "inline_id" => $_GET["inline"],
     );
     
     $highscores = get_highscores($query_params);
@@ -57,28 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function post_highscore($data)
 {
-    $id = $data["id"];
+    $message_id = $data["message"];
     $chat_id = $data["chat"];
     $user_id = $data["user"];
+    $inline_message_id = $data["inline"];
 
     $score = $data["score"];
     $legal_score = min($score, 5);
 
-    //TODO finn ut hvorfor dette ikke fungerer.
-
-    /*
-    var en annen som hadde problem med samme metode: https://github.com/php-telegram-bot/core/issues/1248
-    
-    Virker som det er litt motsigende dokumentasjon mtp parametere de vil ha.
-    https://core.telegram.org/bots/api#setgamescore
-    https://core.telegram.org/method/messages.setGameScore
-    tipper jeg skal bruke den øverste. 
-    */
-
     return Request::setGameScore([
-        'chat_id' => $chat_id,
-        'inline_message_id' => $chat_id,
         'user_id' => $user_id,
+        'chat_id' => $chat_id,
+        'message_id' => $message_id,
+        'inline_message_id' => $inline_message_id,
         'score' => strval($legal_score),
         'force' => 'true'
     ]);
@@ -86,11 +79,16 @@ function post_highscore($data)
 
 function get_highscores($data)
 {
-    $chat_id = $data["chat"];
-    $user_id = $data["user"];
+    $chat_id = $data["chat_id"];
+    $user_id = $data["user_id"];
+    $message_id = $data["message_id"];
+    $inline_id = $data["inline_id"];
+
     return Request::getGameHighScores([
         'chat_id' => $chat_id,
         'user_id' => $user_id,
+        'message_id' => $message_id,
+        'inline_message_id' => $inline_id,
     ]);
 }
 
