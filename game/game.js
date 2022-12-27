@@ -4,14 +4,14 @@ const curData = (location.hash || '').substring(1).replace(/[\?&].*/g, '');
 let counter = 0;
 
 function plus() {
-    if(counter < 5) {
+    if (counter < 5) {
         counter++;
     }
     document.getElementById("counter").innerHTML = counter;
 }
 
 function minus() {
-    if(counter > 0) {
+    if (counter > 0) {
         counter--;
     }
     document.getElementById("counter").innerHTML = counter;
@@ -33,6 +33,10 @@ function play_again() {
     document.getElementById("game_over").setAttribute("style", "display: none;");
 }
 
+function get_scores() {
+    get(`${API_ENDPOINT_POST_HIGHSCORE}?chat=${TelegramGameProxy.initParams.chat}&user=${TelegramGameProxy.initParams.user}`);
+}
+
 function send_score() {
     post(API_ENDPOINT_POST_HIGHSCORE, {
         score: counter,
@@ -45,18 +49,34 @@ function send_score() {
 function post(url, data) {
     var xhr = new XMLHttpRequest();
     console.log(`posting score to url ${url}`, data);
-    xhr.onload = function() {
-      if (xhr.status == 200) {
-        console.log("posted score successfully");
-      } else {
-        try {
-            console.error("posting score seemed to fail", JSON.parse(xhr.responseText));
-        } catch (error) {
-            console.error("posting score seemed to fail", xhr.responseText);
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            console.log("posted score successfully");
+        } else {
+            try {
+                console.error("posting score seemed to fail", JSON.parse(xhr.responseText));
+            } catch (error) {
+                console.error("posting score seemed to fail", xhr.responseText);
+            }
         }
-      }
     }
     xhr.open("POST", url, true);
     xhr.send(JSON.stringify(data));
-  }
-  
+}
+
+function get(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            console.log("fetched scores successfully", xhr.responseText);
+        } else {
+            try {
+                console.error("fetching highscores seemed to fail", JSON.parse(xhr.responseText));
+            } catch (error) {
+                console.error("fetching highscores seemed to fail", xhr.responseText);
+            }
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}

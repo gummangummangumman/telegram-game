@@ -19,25 +19,43 @@ $baseurl = "https://api.telegram.org/bot" . $bot_token;
 $update = file_get_contents("php://input");
 $update_array = json_decode($update, true);
 
-if (empty($update_array["score"])) {
-    http_response_code(400);
-    $error = new stdClass();
-    $error->error = "No score submitted!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($update_array["score"])) {
+        http_response_code(400);
+        $error = new stdClass();
+        $error->error = "No score submitted!";
 
-    echo json_encode($error);
+        echo json_encode($error);
+        return;
+    }
+
+    $response = post_highscore($update_array);
+
+    if (!empty($response->getErrorCode())) {
+        http_response_code($response->getErrorCode());
+    }
+
+    echo $response;
+    return;
+} else {
+    $query_params = array(
+        "chat_id" => $_GET["chat"],
+        "user_id" => $_GET["user"],
+    );
+    
+    $highscores = get_highscores($query_params);
+
+    if (!empty($highscores->getErrorCode())) {
+        http_response_code($highscores->getErrorCode());
+    }
+
+    echo $highscores;
     return;
 }
 
-$response = post_highscore($baseurl, $update_array);
-if ($response == true) {
-    //setGameScore returns true on errors
-    http_response_code(400);
-    return $response;
-} else {
-    return $response;
-}
 
-function post_highscore($baseurl, $data)
+
+function post_highscore($data)
 {
     $id = $data["id"];
     $chat_id = $data["chat"];
@@ -47,15 +65,32 @@ function post_highscore($baseurl, $data)
     $legal_score = min($score, 5);
 
     //TODO finn ut hvorfor dette ikke fungerer.
-    //var en annen som hadde problem med samme metode: https://github.com/php-telegram-bot/core/issues/1248
+
+    /*
+    var en annen som hadde problem med samme metode: https://github.com/php-telegram-bot/core/issues/1248
+    
+    Virker som det er litt motsigende dokumentasjon mtp parametere de vil ha.
+    https://core.telegram.org/bots/api#setgamescore
+    https://core.telegram.org/method/messages.setGameScore
+    tipper jeg skal bruke den øverste. 
+    */
 
     return Request::setGameScore([
-        'message_id' => $chat_id,
-        'peer' => $chat_id,
+        'chat_id' => $chat_id,
+        'inline_message_id' => $chat_id,
         'user_id' => $user_id,
-        'id' => $id,
-        'edit_message' => 'true',
-        'score' => $legal_score,
+        'score' => strval($legal_score),
+        'force' => 'true'
+    ]);
+}
+
+function get_highscores($data)
+{
+    $chat_id = $data["chat"];
+    $user_id = $data["user"];
+    return Request::getGameHighScores([
+        'chat_id' => $chat_id,
+        'user_id' => $user_id,
     ]);
 }
 

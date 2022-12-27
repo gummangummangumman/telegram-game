@@ -5,6 +5,7 @@
     <link rel="icon" href="https://gumman.one/pics/gumman_icon.jpg">
     <link rel="stylesheet" type="text/css" href="game.css">
 </head>
+
 <body>
 
     <div id="game">
@@ -18,20 +19,24 @@
             <button onclick="finish()">finish</button>
         </p>
     </div>
-    
+
 
     <div id="game_over" style="display: none;">
 
         <p>score: <span id="game_over_counter">0</span></p>
-        
-        <button onclick="play_again()">play again</button>
+
+        <button onclick="play_again()">Play again</button>
         <br />
+        <br />
+        <button onclick="get_scores()">Fetch scores</button>
         <br />
         <button onclick="TelegramGameProxy.shareScore()">Share score</button>
 
         <p>Dette spillet er ikke helt ferdig! :)</p>
-        <p>Du kan følge med på utviklingen på <a href="https://github.com/gummangummangumman/telegram-game">github</a>.</p>
+        <p>
+            Du kan følge med på utviklingen på <a href="https://github.com/gummangummangumman/telegram-game">github</a>.
+        </p>
     </div>
 
-    
+
 </body>
