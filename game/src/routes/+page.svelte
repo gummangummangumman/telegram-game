@@ -1,30 +1,56 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import Counter from './Counter.svelte';
 	import HighscoreSender from './highscore.js';
 	import { countStore } from './stores.js';
+	import { _, init, addMessages } from 'svelte-i18n'
+	import i18n from "../i18n/i18n";
 
 	let count:number;
-
-	const unsubscribe = countStore.subscribe((value) => (count = value));
+	const unsubscribeCount = countStore.subscribe((value) => (count = value));
 
 	const resetCount = () => {
 		countStore.set(0);
 	};
 
-	onDestroy(() => {
-		unsubscribe();
-	});
-
 	function finish() {
 		const highscoreSender = new HighscoreSender();
 		highscoreSender.send_score(count);
+		resetCount();
 	}
 
 	function fetch_scores() {
 		const highscoreSender = new HighscoreSender();
 		highscoreSender.get_scores();
 	}
+
+	onDestroy(() => {
+		unsubscribeCount();
+	});
+
+	function i18nSetup() {
+		init({
+			initialLocale: "en",
+			fallbackLocale: "en",
+		});
+		addMessages("en", i18n.en);
+		addMessages("nb", i18n.nb);
+		addMessages("ru", i18n.ru);
+		addMessages("de", i18n.de);
+		addMessages("fr", i18n.fr);
+	}
+	i18nSetup();
+	
+
+	onMount(() => {
+		// @ts-ignore
+		const lang = TelegramGameProxy?.initParams?.lang;
+		init({
+			initialLocale: lang,
+			fallbackLocale: 'en',
+		});
+		
+	});
 </script>
 
 <svelte:head>
@@ -34,8 +60,8 @@
 
 <section>
 	<h1>
-		<span class="welcome">
-			<h1>Game</h1>
+		<span class="title">
+			<h1>{$_("title")}</h1>
 		</span>
 	</h1>
 
@@ -58,7 +84,7 @@
 		width: 100%;
 	}
 
-	.welcome {
+	.title {
 		display: block;
 		position: relative;
 		width: 100%;
