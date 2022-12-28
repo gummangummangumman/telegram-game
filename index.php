@@ -24,13 +24,15 @@ $callback_query_id = $update_array["callback_query"]["id"];
 if (!empty($callback_query_id)) {
     $chat_instance = $update_array["callback_query"]["chat_instance"];
     $user_id = $update_array["callback_query"]["from"]["id"];
+    $language_code = $update_array["callback_query"]["from"]["language_code"];
     $message_id = $update_array["callback_query"]["message"]["message_id"];
     $chat_id = $update_array["callback_query"]["message"]["chat"]["id"];
     $inline_message_id = $update_array["callback_query"]["inline_message_id"];
 
     return Request::answerCallbackQuery([
         'callback_query_id' => $callback_query_id,
-        'url' => $game_url . "#message=" . $message_id . "&inline=" . $inline_message_id . "&instance=" . $chat_instance . "&user=" . $user_id . "&chat=" . $chat_id,
+        'url' => $game_url . "#message=" . $message_id . "&inline=" . $inline_message_id . "&instance=" . $chat_instance .
+        "&user=" . $user_id . "&chat=" . $chat_id . "&lang=" . $language_code,
     ]);
 }
 
