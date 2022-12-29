@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	import { onDestroy } from 'svelte';
-	import { countStore } from './stores';
+	import { scoreStore } from '../store/stores.js';
 
 	let count: number;
 
-	const unsubscribe = countStore.subscribe(value => count = value);
+	const unsubscribe = scoreStore.subscribe(value => count = value);
 
 	const incrementCount = () => {
-		countStore.update((n) => n + 1);
+		scoreStore.update((n) => n + 1);
 	};
 
 	const decrementCount = () => {
-		countStore.update((n) => n - 1);
+		scoreStore.update((n) => n - 1);
 	};
 
 	onDestroy(() => {
