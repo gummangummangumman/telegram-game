@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { init, addMessages } from 'svelte-i18n'
+	import { _, init, addMessages } from 'svelte-i18n'
 	import i18n from "../i18n/i18n";
 	import Game from '../components/Game.svelte';
 	import { gameStore } from '../store/stores.js';
@@ -18,6 +18,7 @@
 		addMessages("fr", i18n.fr);
 	}
 	i18nSetup();
+
 	onMount(() => {
 		// @ts-ignore
 		const lang = TelegramGameProxy?.initParams?.lang;
@@ -25,7 +26,6 @@
 			initialLocale: lang,
 			fallbackLocale: 'en',
 		});
-		
 	});
 
 
@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-	<title>Game</title>
+	<title>{$_("title")}</title>
 	<meta name="description" content="GuMMaN's epic telegram game" />
 </svelte:head>
 

@@ -9,8 +9,8 @@ export default class HighscoreSender {
 		console.log('initing highscore.ts', TelegramGameProxy.initParams);
 	}
 
-	get_scores() {
-		this.get(
+	async get_scores() {
+		return this.get(
 			`${this.API_ENDPOINT_POST_HIGHSCORE}?chat=${TelegramGameProxy.initParams.chat}&user=${TelegramGameProxy.initParams.user}` +
 				`&message=${TelegramGameProxy.initParams.message}&inline=${TelegramGameProxy.initParams.inline}`
 		);
@@ -45,20 +45,8 @@ export default class HighscoreSender {
 		xhr.send(JSON.stringify(data));
 	}
 
-	get(url) {
-		var xhr = new XMLHttpRequest();
-		xhr.onload = function () {
-			if (xhr.status == 200) {
-				console.log('fetched scores successfully', xhr.responseText);
-			} else {
-				try {
-					console.error('fetching highscores seemed to fail', JSON.parse(xhr.responseText));
-				} catch (error) {
-					console.error('fetching highscores seemed to fail', xhr.responseText);
-				}
-			}
-		};
-		xhr.open('GET', url);
-		xhr.send();
+	async get(url) {
+		const response = await fetch(url);
+		return response.json();
 	}
 }

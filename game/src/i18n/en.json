@@ -1,6 +1,7 @@
 {
     "title": "Game",
     "highscores": "Highscores",
+    "play": "Play",
     "play_again": "Play again",
     "you_scored_before_number": "You scored",
     "you_scored_after_number": " "

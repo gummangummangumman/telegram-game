@@ -3,9 +3,18 @@
 	import { gameStore, scoreStore } from '../store/stores.js';
 	import { _ } from 'svelte-i18n'
 	import { onMount, onDestroy } from 'svelte';
+	import type { Highscore, Highscores } from 'src/types/Highscores.js';
+	import ScoreView from './ScoreView.svelte';
 
 	let score:number;
-	const unsubscribeScore = scoreStore.subscribe((value) => (score = value));
+	let hasAlreadyPlayed:boolean = false;
+	const unsubscribeScore = scoreStore.subscribe((value) => {
+		score = value
+		hasAlreadyPlayed = value > 0;
+	});
+
+
+	let highscoreList:Highscore[] = [];
 
 	const resetCount = () => {
 		scoreStore.set(0);
@@ -18,7 +27,13 @@
 
 	const fetch_scores = () => {
 		const highscoreSender = new HighscoreSender();
-		highscoreSender.get_scores();
+		highscoreSender.get_scores()
+			.then((response: Highscores) => {
+				highscoreList = response.result;
+			}).catch(e => {
+				console.error(e);
+				highscoreList = [];
+			});
 	}
 
 	onMount(() => {
@@ -31,18 +46,30 @@
 </script>
 
 <section>
-	<h1>{$_("you_scored_before_number")} <b>{score}</b> {$_("you_scored_after_number")}</h1>
-
 	<h3>
 		<span class="title">
-			<h1>{$_("highscores")}</h1>
+			<h1>{$_("title")}</h1>
 		</span>
 	</h3>
 
-	<ul>
-	</ul>
+	{#if hasAlreadyPlayed}
+		<h1>{$_("you_scored_before_number")} <b>{score}</b> {$_("you_scored_after_number")}</h1>
+	{/if}
 
-	<button on:click={startNewGame}>{$_("play_again")}</button>
+	<div class="highscore_list">
+		<h3>{$_("highscores")}</h3>
+		<ul>
+			{#each highscoreList as highscore, i}
+				{#if i==3 && highscore.position > 4}
+					<li>...</li>
+				{/if}
+				<ScoreView highscore={highscore} />
+			{/each}
+		</ul>
+	</div>
+	
+
+	<button on:click={startNewGame}>{hasAlreadyPlayed ? $_("play_again") : $_("play")}</button>
 </section>
 
 <style>
@@ -56,5 +83,19 @@
 		width: 100%;
 		height: 0;
 		padding: 0 0 calc(100% * 495 / 2048) 0;
+		margin-bottom: 48px;
+	}
+
+	.highscore_list {
+		width: 80vw;
+		font-size: 22px;
+	}
+
+	li {
+		color: transparent;
+	}
+
+	ul {
+		list-style: none;
 	}
 </style>
