@@ -32,7 +32,7 @@ if (!empty($callback_query_id)) {
     return Request::answerCallbackQuery([
         'callback_query_id' => $callback_query_id,
         'url' => $game_url . "#message=" . $message_id . "&inline=" . $inline_message_id . "&instance=" . $chat_instance .
-        "&user=" . $user_id . "&chat=" . $chat_id . "&lang=" . $language_code,
+            "&user=" . $user_id . "&chat=" . $chat_id . "&lang=" . $language_code,
     ]);
 }
 
@@ -43,22 +43,23 @@ $text = $update_array["message"]["text"];
 if (!empty($from_chat) && !empty($text)) {
     switch ($text) {
 
+        case "/start@" . $bot_name:
+        case "/start":
+        case "/help@" . $bot_name:
+        case "/help":
+            return Request::sendMessage([
+                'chat_id' => $from_chat,
+                'text' => 'Try /game@' . $bot_name . ' to play in this chat' .
+                    chr(10) .
+                    chr(10) .
+                    'Otherwise, click this link to share a game in another chat: https://telegram.me/' . $bot_name . '?game=' . $game_name,
+            ]);
+
         case "/game@" . $bot_name:
         case "/game":
             return Request::sendGame([
                 'chat_id' => $from_chat,
                 'game_short_name' => $game_name,
-            ]);
-
-
-        case "/help@" . $bot_name:
-        case "/help":
-            return Request::sendMessage([
-                'chat_id' => $from_chat,
-                'text' => 'Try /game' .
-                chr(10) .
-                chr(10) .
-                'Otherwise, click this link to share a game in a chat: https://telegram.me/' . $bot_name . '?game=' . $game_name,
             ]);
 
         default:
@@ -84,6 +85,3 @@ if (!empty($inline_query_id)) {
         ]
     ]);
 }
-
-
-?>
