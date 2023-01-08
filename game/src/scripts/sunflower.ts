@@ -10,7 +10,7 @@ export class Sunflower {
 		console.log('sunflower');
 		this.gameContext = gameContext;
 		this.image = new Image();
-		this.image.src = '../../solsikke.png';
+		this.image.src = 'solsikke.png';
 		this.maxWidth = maxWidth;
 		this.maxHeight = maxHeight;
 		this.position = maxWidth;

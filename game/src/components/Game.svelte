@@ -14,7 +14,7 @@
 
 	function finish() {
 		const highscoreSender = new HighscoreSender();
-		//highscoreSender.send_score(score);
+		highscoreSender.send_score(score);
         deathAnimationPlaying = true;
         setTimeout(() => gameStore.set(false), deathAnimationDuration);
 	}

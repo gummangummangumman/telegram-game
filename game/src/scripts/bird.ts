@@ -10,7 +10,7 @@ export class Bird {
 	constructor(gameContext: CanvasRenderingContext2D, maxWidth: number, maxHeight: number) {
 		this.gameContext = gameContext;
 		this.image = new Image();
-		this.image.src = '../../fugl.png';
+		this.image.src = 'fugl.png';
 		this.maxWidth = maxWidth;
 		this.maxHeight = maxHeight;
 		this.position = maxHeight;
