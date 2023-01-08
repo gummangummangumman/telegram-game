@@ -1,5 +1,5 @@
 <script lang="ts">
-	import HighscoreSender from '../scripts/highscore.js';
+	import { HighscoreSender } from '../scripts/highscore_sender';
 	import { gameStore, scoreStore } from '../store/stores.js';
 	import { _ } from 'svelte-i18n'
 	import { onMount, onDestroy } from 'svelte';
@@ -54,6 +54,8 @@
 
 	{#if hasAlreadyPlayed}
 		<h1>{$_("you_scored_before_number")} <b>{score}</b> {$_("you_scored_after_number")}</h1>
+	{:else}
+		<img src="dansende-blomst.gif" alt="sunflower" />
 	{/if}
 
 	<div class="highscore_list">

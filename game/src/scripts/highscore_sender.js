@@ -1,6 +1,6 @@
-// @ts-nocheck
+//@ts-nocheck
 
-export default class HighscoreSender {
+export class HighscoreSender {
 	constructor() {
 		const API_BASE_URL = window.location
 			.toString()
