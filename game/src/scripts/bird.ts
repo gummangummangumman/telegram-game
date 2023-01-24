@@ -1,32 +1,34 @@
 export class Bird {
-	gameContext: CanvasRenderingContext2D;
+	game_context: CanvasRenderingContext2D;
 	image: HTMLImageElement;
-	maxHeight: number;
-	maxWidth: number;
+	max_height: number;
+	max_width: number;
 
 	position: number;
 	going_up: boolean;
 
-	constructor(gameContext: CanvasRenderingContext2D, maxWidth: number, maxHeight: number) {
-		this.gameContext = gameContext;
+	speed: number = 5;
+
+	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
+		this.game_context = game_context;
 		this.image = new Image();
 		this.image.src = 'fugl.png';
-		this.maxWidth = maxWidth;
-		this.maxHeight = maxHeight;
-		this.position = maxHeight;
+		this.max_width = max_width;
+		this.max_height = max_height;
+		this.position = max_height;
 		this.going_up = true;
 	}
 
 	update() {
 		if (this.going_up) {
-			this.position -= 1;
+			this.position -= this.speed;
 			this.going_up = this.position > 0;
 		} else {
-			this.position += 1;
-			this.going_up = this.position > this.maxHeight;
+			this.position += this.speed;
+			this.going_up = this.position > this.max_height;
 		}
 
-		this.gameContext.drawImage(this.image, 100, this.position);
+		this.game_context.drawImage(this.image, 100, this.position);
 	}
 
 	should_be_deleted() {

@@ -24,7 +24,7 @@
 		const canvas = document.getElementsByTagName('canvas')[0];
 		const gameContext = canvas?.getContext("2d");
 		const game = new GameEngine(gameContext!, canvas.width, canvas.height);
-		setInterval(() => game.update(), 1/120);
+		setInterval(() => game.update(), 1000/60); //60fps
 	});
 
 	onDestroy(() => {

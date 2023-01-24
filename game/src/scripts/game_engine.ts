@@ -2,26 +2,31 @@ import { Bird } from './bird';
 import { Sunflower } from './sunflower';
 
 export class GameEngine {
-	gameContext: CanvasRenderingContext2D;
+	game_context: CanvasRenderingContext2D;
 	bird: Bird;
 	sunflowers: Sunflower[];
-	maxHeight: number;
-	maxWidth: number;
+	max_height: number;
+	max_width: number;
 
-	constructor(gameContext: CanvasRenderingContext2D, maxWidth: number, maxHeight: number) {
-		this.gameContext = gameContext;
-		this.bird = new Bird(gameContext, maxWidth, maxHeight);
+	sunflowers_passed: number;
+
+	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
+		this.game_context = game_context;
+		this.bird = new Bird(game_context, max_width, max_height);
 		this.sunflowers = [];
-		this.maxWidth = maxWidth;
-		this.maxHeight = maxHeight;
+		this.max_width = max_width;
+		this.max_height = max_height;
+		this.sunflowers_passed = 0;
 	}
 
-	makeSunFlower() {
-		this.sunflowers.push(new Sunflower(this.gameContext, this.maxWidth, this.maxHeight));
+	make_sunflower() {
+		this.sunflowers.push(
+			new Sunflower(this.game_context, this.max_width, this.max_height, this.sunflowers_passed)
+		);
 	}
 
 	update() {
-		this.gameContext.clearRect(0, 0, 300, 150);
+		this.game_context.clearRect(0, 0, 300, 150);
 		this.update_sunflowers();
 		this.bird.update();
 	}
@@ -34,7 +39,8 @@ export class GameEngine {
 			return !sunflower.should_be_deleted();
 		});
 		if (!this.sunflowers.length) {
-			this.makeSunFlower();
+			this.sunflowers_passed++;
+			this.make_sunflower();
 		}
 	}
 }
