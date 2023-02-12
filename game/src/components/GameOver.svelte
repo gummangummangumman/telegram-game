@@ -1,20 +1,19 @@
 <script lang="ts">
 	import { HighscoreSender } from '../scripts/highscore_sender';
 	import { gameStore, scoreStore } from '../store/stores.js';
-	import { _ } from 'svelte-i18n'
+	import { _ } from 'svelte-i18n';
 	import { onMount, onDestroy } from 'svelte';
 	import type { Highscore, Highscores } from 'src/types/Highscores.js';
 	import ScoreView from './ScoreView.svelte';
 
-	let score:number;
-	let hasAlreadyPlayed:boolean = false;
+	let score: number;
+	let hasAlreadyPlayed: boolean = false;
 	const unsubscribeScore = scoreStore.subscribe((value) => {
-		score = value
+		score = value;
 		hasAlreadyPlayed = value > 0;
 	});
 
-
-	let highscoreList:Highscore[] = [];
+	let highscoreList: Highscore[] = [];
 
 	const resetCount = () => {
 		scoreStore.set(0);
@@ -27,51 +26,52 @@
 
 	const fetch_scores = () => {
 		const highscoreSender = new HighscoreSender();
-		highscoreSender.get_scores()
+		highscoreSender
+			.get_scores()
 			.then((response: Highscores) => {
 				highscoreList = response.result;
-			}).catch(e => {
+			})
+			.catch((e) => {
 				console.error(e);
 				highscoreList = [];
 			});
-	}
+	};
 
 	onMount(() => {
 		fetch_scores();
-	})
+	});
 
 	onDestroy(() => {
 		unsubscribeScore();
-	})
+	});
 </script>
 
 <section>
 	<h3>
 		<span class="title">
-			<h1>{$_("title")}</h1>
+			<h1>{$_('title')}</h1>
 		</span>
 	</h3>
 
 	{#if hasAlreadyPlayed}
-		<h1>{$_("you_scored_before_number")} <b>{score}</b> {$_("you_scored_after_number")}</h1>
+		<h1>{$_('you_scored_before_number')} <b>{score}</b> {$_('you_scored_after_number')}</h1>
 	{:else}
 		<img src="dansende-blomst.gif" alt="sunflower" />
 	{/if}
 
 	<div class="highscore_list">
-		<h3>{$_("highscores")}</h3>
+		<h3>{$_('highscores')}</h3>
 		<ul>
 			{#each highscoreList as highscore, i}
-				{#if i==3 && highscore.position > 4}
+				{#if i == 3 && highscore.position > 4}
 					<li>...</li>
 				{/if}
-				<ScoreView highscore={highscore} />
+				<ScoreView {highscore} />
 			{/each}
 		</ul>
 	</div>
-	
 
-	<button on:click={startNewGame}>{hasAlreadyPlayed ? $_("play_again") : $_("play")}</button>
+	<button on:click={startNewGame}>{hasAlreadyPlayed ? $_('play_again') : $_('play')}</button>
 </section>
 
 <style>

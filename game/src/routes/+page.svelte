@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { _, init, addMessages } from 'svelte-i18n'
-	import i18n from "../i18n/i18n";
+	import { _, init, addMessages } from 'svelte-i18n';
+	import i18n from '../i18n/i18n';
 	import Game from '../components/Game.svelte';
 	import { gameStore } from '../store/stores.js';
 	import GameOver from '../components/GameOver.svelte';
 
 	function i18nSetup() {
 		init({
-			initialLocale: "en",
-			fallbackLocale: "en",
+			initialLocale: 'en',
+			fallbackLocale: 'en',
 		});
-		addMessages("en", i18n.en);
-		addMessages("nb", i18n.nb);
-		addMessages("ru", i18n.ru);
-		addMessages("de", i18n.de);
-		addMessages("fr", i18n.fr);
+		addMessages('en', i18n.en);
+		addMessages('nb', i18n.nb);
+		addMessages('ru', i18n.ru);
+		addMessages('de', i18n.de);
+		addMessages('fr', i18n.fr);
 	}
 	i18nSetup();
 
@@ -28,17 +28,16 @@
 		});
 	});
 
-
-	let gameActive:boolean;
+	let gameActive: boolean;
 	const unsubscribeGame = gameStore.subscribe((value) => (gameActive = value));
-	
+
 	onDestroy(() => {
 		unsubscribeGame();
 	});
 </script>
 
 <svelte:head>
-	<title>{$_("title")}</title>
+	<title>{$_('title')}</title>
 	<meta name="description" content="GuMMaN's epic telegram game" />
 </svelte:head>
 

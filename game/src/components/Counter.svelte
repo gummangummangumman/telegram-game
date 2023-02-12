@@ -5,7 +5,7 @@
 
 	let count: number;
 
-	const unsubscribe = scoreStore.subscribe(value => count = value);
+	const unsubscribe = scoreStore.subscribe((value) => (count = value));
 
 	const incrementCount = () => {
 		scoreStore.update((n) => n + 1);
