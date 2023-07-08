@@ -16,16 +16,17 @@ export class Bird {
 		this.max_width = max_width;
 		this.max_height = max_height;
 		this.position = max_height;
-		this.going_up = true;
+		this.going_up = false;
+		this.addEventListeners();
 	}
 
 	update() {
 		if (this.going_up) {
 			this.position -= this.speed;
-			this.going_up = this.position > 0;
+			this.position = Math.max(this.position, 0);
 		} else {
 			this.position += this.speed;
-			this.going_up = this.position > this.max_height;
+			this.position = Math.min(this.position, 130);
 		}
 
 		this.game_context.drawImage(this.image, 100, this.position);
@@ -34,4 +35,26 @@ export class Bird {
 	should_be_deleted() {
 		return this.position < -this.image.width;
 	}
+
+	//input controls
+	addEventListeners = () => {
+		document.addEventListener('keydown', () => {
+			this.going_up = true;
+		});
+		document.addEventListener('keyup', () => {
+			this.going_up = false;
+		});
+		document.addEventListener('mousedown', () => {
+			this.going_up = true;
+		});
+		document.addEventListener('mouseup', () => {
+			this.going_up = false;
+		});
+		document.addEventListener('touchstart', () => {
+			this.going_up = true;
+		});
+		document.addEventListener('touchend', () => {
+			this.going_up = false;
+		});
+	};
 }

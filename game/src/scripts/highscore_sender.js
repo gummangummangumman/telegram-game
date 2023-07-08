@@ -6,7 +6,7 @@ export class HighscoreSender {
 			.toString()
 			.substring(0, window.location.toString().indexOf('game/'));
 		this.API_ENDPOINT_POST_HIGHSCORE = API_BASE_URL + 'highscore';
-		console.log('initing highscore.ts', TelegramGameProxy.initParams);
+		console.log('initing HighscoreSender', TelegramGameProxy.initParams);
 	}
 
 	async get_scores() {
