@@ -9,7 +9,9 @@ export class Sunflower {
 	vertical_position: number;
 
 	speed: number = 2;
-	added_speed_each_sunflower: number = 0.5;
+	added_speed_each_sunflower: number = 0.2;
+
+	collision_checked: boolean = false;
 
 	constructor(
 		game_context: CanvasRenderingContext2D,

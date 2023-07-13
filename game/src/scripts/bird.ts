@@ -7,7 +7,7 @@ export class Bird {
 	position: number;
 	going_up: boolean;
 
-	speed: number = 5;
+	speed: number = 2;
 
 	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
 		this.game_context = game_context;
