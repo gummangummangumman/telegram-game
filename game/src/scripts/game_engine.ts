@@ -1,5 +1,6 @@
 import { Bird } from './bird';
 import { Sunflower } from './sunflower';
+import { scoreStore } from '../store/stores.js';
 
 export class GameEngine {
 	game_context: CanvasRenderingContext2D;
@@ -11,7 +12,14 @@ export class GameEngine {
 	sunflowers_passed: number;
 	dead: boolean;
 
-	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
+	finish: Function;
+
+	constructor(
+		game_context: CanvasRenderingContext2D,
+		max_width: number,
+		max_height: number,
+		finish: Function
+	) {
 		this.game_context = game_context;
 		this.bird = new Bird(game_context, max_width, max_height);
 		this.sunflowers = [];
@@ -19,6 +27,7 @@ export class GameEngine {
 		this.max_height = max_height;
 		this.sunflowers_passed = 0;
 		this.dead = false;
+		this.finish = finish;
 	}
 
 	make_sunflower() {
@@ -37,14 +46,14 @@ export class GameEngine {
 
 		this.sunflowers.forEach((flower) => {
 			if (flower.position < 120 && !flower.collision_checked) {
-				if (this.bird.position < flower.vertical_position) {
-					console.log('you DIED to top flower');
+				if (
+					this.bird.position < flower.vertical_position ||
+					this.bird.position > flower.vertical_position + 40
+				) {
 					this.dead = true;
-				}
-
-				if (this.bird.position > flower.vertical_position + 40) {
-					console.log('you DIED to bottom flower');
-					this.dead = true;
+					this.finish();
+				} else {
+					scoreStore.update((n) => Math.min(5, n + 1));
 				}
 
 				flower.collision_checked = true;
