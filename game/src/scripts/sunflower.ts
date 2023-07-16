@@ -1,7 +1,6 @@
 export class Sunflower {
 	game_context: CanvasRenderingContext2D;
 	image: HTMLImageElement;
-	upside_down_image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
 	gap_between_flowers: number;
@@ -23,8 +22,6 @@ export class Sunflower {
 		this.game_context = game_context;
 		this.image = new Image();
 		this.image.src = 'solsikke.png';
-		this.upside_down_image = new Image();
-		this.upside_down_image.src = 'solsikke_opp_ned.png';
 		this.max_width = max_width;
 		this.max_height = max_height;
 		this.gap_between_flowers = max_height / 10;
@@ -36,14 +33,16 @@ export class Sunflower {
 	update() {
 		this.position -= this.speed;
 
+		this.game_context.scale(1, -1);
 		//upper
 		this.game_context.drawImage(
-			this.upside_down_image,
+			this.image,
 			this.position,
-			this.vertical_position,
+			-this.vertical_position + this.max_height,
 			this.image.width,
 			-this.image.height
 		);
+		this.game_context.scale(1, -1);
 
 		//lower
 		this.game_context.drawImage(
@@ -57,5 +56,9 @@ export class Sunflower {
 
 	should_be_deleted() {
 		return this.position < -this.image.width;
+	}
+
+	die() {
+		//TODO death animation
 	}
 }
