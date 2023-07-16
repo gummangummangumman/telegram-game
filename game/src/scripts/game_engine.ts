@@ -12,6 +12,8 @@ export class GameEngine {
 	sunflowers_passed: number;
 	dead: boolean;
 
+	//Callback for when the game is ending.
+	//The countdown to go to the next page is in the function itself.
 	finish: Function;
 
 	constructor(
@@ -40,15 +42,18 @@ export class GameEngine {
 		if (this.dead) {
 			return;
 		}
-		this.game_context.clearRect(0, 0, 300, 150);
+		this.game_context.clearRect(0, 0, this.max_width, this.max_height);
 		this.update_sunflowers();
 		this.bird.update();
 
 		this.sunflowers.forEach((flower) => {
-			if (flower.position < 120 && !flower.collision_checked) {
+			if (
+				flower.position < this.bird.horizontal_position + this.bird.image.width &&
+				!flower.collision_checked
+			) {
 				if (
-					this.bird.position < flower.vertical_position ||
-					this.bird.position > flower.vertical_position + 40
+					this.bird.vertical_position < flower.vertical_position ||
+					this.bird.vertical_position > flower.vertical_position + flower.gap_between_flowers
 				) {
 					this.dead = true;
 					this.finish();
