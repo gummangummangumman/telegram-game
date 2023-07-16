@@ -21,7 +21,15 @@ export class Bird {
 		this.addEventListeners();
 	}
 
-	update() {
+	update(game_over: boolean) {
+		if (!game_over) {
+			this.move();
+		}
+
+		this.game_context.drawImage(this.image, this.horizontal_position, this.vertical_position);
+	}
+
+	move() {
 		if (this.going_up) {
 			this.vertical_position -= this.speed;
 			this.vertical_position = Math.max(this.vertical_position, 0);
@@ -29,8 +37,6 @@ export class Bird {
 			this.vertical_position += this.speed;
 			this.vertical_position = Math.min(this.vertical_position, this.max_height - 20);
 		}
-
-		this.game_context.drawImage(this.image, this.horizontal_position, this.vertical_position);
 	}
 
 	should_be_deleted() {

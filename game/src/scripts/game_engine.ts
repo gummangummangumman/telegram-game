@@ -39,12 +39,9 @@ export class GameEngine {
 	}
 
 	update() {
-		if (this.dead) {
-			return;
-		}
 		this.game_context.clearRect(0, 0, this.max_width, this.max_height);
 		this.update_sunflowers();
-		this.bird.update();
+		this.bird.update(this.dead);
 
 		this.sunflowers.forEach((flower) => {
 			if (
@@ -56,6 +53,7 @@ export class GameEngine {
 					this.bird.vertical_position > flower.vertical_position + flower.gap_between_flowers
 				) {
 					this.dead = true;
+					flower.die();
 					this.finish();
 				} else {
 					scoreStore.update((n) => Math.min(5, n + 1));
@@ -68,7 +66,7 @@ export class GameEngine {
 
 	update_sunflowers() {
 		this.sunflowers.forEach((sunflower) => {
-			sunflower.update();
+			sunflower.update(this.dead);
 		});
 		this.sunflowers = this.sunflowers.filter((sunflower) => {
 			return !sunflower.should_be_deleted();

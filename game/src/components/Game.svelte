@@ -9,7 +9,7 @@
 	let score: number;
 	const unsubscribeScore = scoreStore.subscribe((value) => (score = value));
 
-	const deathAnimationDuration = 1000; //in ms
+	const deathAnimationDuration = 1600; //in ms
 
 	const CANVAS_SIZE = {
 		width: 768,

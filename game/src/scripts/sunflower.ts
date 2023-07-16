@@ -30,11 +30,13 @@ export class Sunflower {
 		this.speed += this.added_speed_each_sunflower * sunflower_id;
 	}
 
-	update() {
-		this.position -= this.speed;
+	update(game_over: boolean) {
+		if (!game_over) {
+			this.position -= this.speed;
+		}
 
-		this.game_context.scale(1, -1);
 		//upper
+		this.game_context.scale(1, -1);
 		this.game_context.drawImage(
 			this.image,
 			this.position,
@@ -59,6 +61,7 @@ export class Sunflower {
 	}
 
 	die() {
-		//TODO death animation
+		this.image = new Image();
+		this.image.src = 'solsikke_dead.png';
 	}
 }
