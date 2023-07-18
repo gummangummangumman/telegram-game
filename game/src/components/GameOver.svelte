@@ -65,17 +65,26 @@
 		<img src="dansende-blomst.gif" alt="sunflower" />
 	{/if}
 
-	<div class="highscore_list">
-		<h3>{$_('highscores')}</h3>
-		<ul>
-			{#each highscoreList as highscore, i}
-				{#if i == 3 && highscore.position > 4}
-					<li>...</li>
-				{/if}
-				<ScoreView {highscore} />
-			{/each}
-		</ul>
-	</div>
+	{#if usingTelegram}
+		<div class="highscore_list">
+			<h3>{$_('highscores')}</h3>
+			<ul>
+				{#each highscoreList as highscore, i}
+					{#if i == 3 && highscore.position > 4}
+						<li>...</li>
+					{/if}
+					<ScoreView {highscore} />
+				{/each}
+			</ul>
+		</div>
+	{:else if hasAlreadyPlayed}
+		<p>
+			{$_('highscores_no_telegram')}
+			<a href="https://t.me/gummangamebot">https://t.me/gummangamebot</a>
+		</p>
+	{:else}
+		<p />
+	{/if}
 
 	<button on:click={startNewGame}>{hasAlreadyPlayed ? $_('play_again') : $_('play')}</button>
 </section>
