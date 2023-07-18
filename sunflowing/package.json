@@ -1,6 +1,6 @@
 {
-	"name": "svelte-test",
-	"version": "0.0.1",
+	"name": "sunflowing",
+	"version": "0.0.1337",
 	"scripts": {
 		"start": "vite dev --open",
 		"dev": "vite dev",

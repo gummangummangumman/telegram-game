@@ -4,7 +4,7 @@ export class HighscoreSender {
 	constructor() {
 		const API_BASE_URL = window.location
 			.toString()
-			.substring(0, window.location.toString().indexOf('game/'));
+			.substring(0, window.location.toString().indexOf('sunflowing/'));
 		this.API_ENDPOINT_POST_HIGHSCORE = API_BASE_URL + 'highscore';
 		console.log('initing HighscoreSender', TelegramGameProxy.initParams);
 	}

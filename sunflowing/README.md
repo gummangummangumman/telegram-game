@@ -1,6 +1,6 @@
-# The game
+# Sunflowing
 
-Svelte project.
+Svelte project with a self-written javascript game engine.
 
 ## Developing
 
@@ -10,7 +10,7 @@ Once you've installed dependencies with `npm install`, start a development serve
 npm run start
 ```
 
-## Building
+## Building and deploying
 
 To create a production version of your app:
 
@@ -18,4 +18,4 @@ To create a production version of your app:
 npm run build
 ```
 
-You can then deploy the files in the `build` folder under `/game`.
+You can then upload the files in the `build` folder directly under `/sunflowing`.
