@@ -2,12 +2,14 @@
 	import { onDestroy, onMount } from 'svelte';
 	import Counter from './Counter.svelte';
 	import { HighscoreSender } from '../scripts/highscore_sender';
-	import { scoreStore, gameStore } from '../store/stores.js';
+	import { scoreStore, gameStore, telegramStore } from '../store/stores.js';
 	import { _ } from 'svelte-i18n';
 	import { GameEngine } from '../scripts/game_engine';
 
 	let score: number;
 	const unsubscribeScore = scoreStore.subscribe((value) => (score = value));
+	let usingTelegram: boolean;
+	const unsubscribeTelegram = telegramStore.subscribe((value) => (usingTelegram = value));
 
 	const deathAnimationDuration = 1600; //in ms
 
@@ -17,8 +19,10 @@
 	};
 
 	const finish = () => {
-		const highscoreSender = new HighscoreSender();
-		highscoreSender.send_score(score);
+		if (usingTelegram) {
+			const highscoreSender = new HighscoreSender();
+			highscoreSender.send_score(score);
+		}
 		setTimeout(() => gameStore.set(false), deathAnimationDuration);
 	};
 
@@ -31,6 +35,7 @@
 
 	onDestroy(() => {
 		unsubscribeScore();
+		unsubscribeTelegram();
 	});
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { HighscoreSender } from '../scripts/highscore_sender';
-	import { gameStore, scoreStore } from '../store/stores.js';
+	import { gameStore, scoreStore, telegramStore } from '../store/stores.js';
 	import { _ } from 'svelte-i18n';
 	import { onMount, onDestroy } from 'svelte';
 	import type { Highscore, Highscores } from 'src/types/Highscores.js';
@@ -12,6 +12,9 @@
 		score = value;
 		hasAlreadyPlayed = value > 0;
 	});
+
+	let usingTelegram: boolean;
+	const unsubscribeTelegram = telegramStore.subscribe((value) => (usingTelegram = value));
 
 	let highscoreList: Highscore[] = [];
 
@@ -38,11 +41,14 @@
 	};
 
 	onMount(() => {
-		fetch_scores();
+		if (usingTelegram) {
+			fetch_scores();
+		}
 	});
 
 	onDestroy(() => {
 		unsubscribeScore();
+		unsubscribeTelegram();
 	});
 </script>
 
