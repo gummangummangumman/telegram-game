@@ -1,5 +1,8 @@
+import { img } from './Img';
+
 export class Sunflower {
 	game_context: CanvasRenderingContext2D;
+	sprites: { [name: string]: HTMLImageElement };
 	image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
@@ -20,14 +23,18 @@ export class Sunflower {
 		sunflower_id: number
 	) {
 		this.game_context = game_context;
-		this.image = new Image();
-		this.image.src = 'solsikke.png';
 		this.max_width = max_width;
 		this.max_height = max_height;
 		this.gap_between_flowers = max_height / 10;
 		this.position = max_width;
 		this.vertical_position = Math.floor(Math.random() * this.max_height);
 		this.speed += this.added_speed_each_sunflower * sunflower_id;
+
+		this.sprites = {
+			alive: img('solsikke.png'),
+			dead: img('solsikke_dead.png'),
+		};
+		this.image = this.sprites.alive;
 	}
 
 	update(game_over: boolean) {
@@ -61,7 +68,6 @@ export class Sunflower {
 	}
 
 	die() {
-		this.image = new Image();
-		this.image.src = 'solsikke_dead.png';
+		this.image = this.sprites.dead;
 	}
 }
