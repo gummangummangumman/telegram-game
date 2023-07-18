@@ -3,7 +3,7 @@
 	import { gameStore, scoreStore, telegramStore } from '../store/stores.js';
 	import { _ } from 'svelte-i18n';
 	import { onMount, onDestroy } from 'svelte';
-	import type { Highscore, Highscores } from 'src/types/Highscores.js';
+	import type { Highscore, Highscores } from '../types/Highscores';
 	import ScoreView from './ScoreView.svelte';
 
 	let score: number;

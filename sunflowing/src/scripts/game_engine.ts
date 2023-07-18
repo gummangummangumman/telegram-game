@@ -1,6 +1,6 @@
 import { Bird } from './bird';
 import { Sunflower } from './sunflower';
-import { scoreStore } from '../store/stores.js';
+import { scoreStore } from '../store/stores';
 
 export class GameEngine {
 	game_context: CanvasRenderingContext2D;
