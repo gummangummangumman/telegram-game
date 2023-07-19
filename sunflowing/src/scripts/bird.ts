@@ -13,6 +13,8 @@ export class Bird {
 
 	speed: number = 4;
 
+	current_animation_frame: number = 0;
+
 	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
 		this.game_context = game_context;
 		this.max_width = max_width;
@@ -38,7 +40,10 @@ export class Bird {
 	}
 
 	animate() {
-		this.image = this.image === this.sprites.up ? this.sprites.down : this.sprites.up;
+		this.current_animation_frame = (this.current_animation_frame + 1) % 4;
+		if (this.current_animation_frame === 0) {
+			this.image = this.image === this.sprites.up ? this.sprites.down : this.sprites.up;
+		}
 	}
 
 	move() {
