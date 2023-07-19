@@ -1,5 +1,8 @@
+import { img } from './Img';
+
 export class Bird {
 	game_context: CanvasRenderingContext2D;
+	sprites: { [name: string]: HTMLImageElement };
 	image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
@@ -12,21 +15,30 @@ export class Bird {
 
 	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
 		this.game_context = game_context;
-		this.image = new Image();
-		this.image.src = 'fugl.png';
 		this.max_width = max_width;
 		this.max_height = max_height;
 		this.vertical_position = max_height / 2;
 		this.going_up = false;
 		this.addEventListeners();
+
+		this.sprites = {
+			down: img('fugl_ned.png'),
+			up: img('fugl_opp.png'),
+		};
+		this.image = this.sprites.down;
 	}
 
 	update(game_over: boolean) {
 		if (!game_over) {
 			this.move();
+			this.animate();
 		}
 
 		this.game_context.drawImage(this.image, this.horizontal_position, this.vertical_position);
+	}
+
+	animate() {
+		this.image = this.image === this.sprites.up ? this.sprites.down : this.sprites.up;
 	}
 
 	move() {

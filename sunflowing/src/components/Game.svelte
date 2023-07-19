@@ -13,6 +13,8 @@
 
 	const deathAnimationDuration = 1600; //in ms
 
+	let gameInterval: number; //Reference to the update interval
+
 	const CANVAS_SIZE = {
 		width: 768,
 		height: 1024,
@@ -30,12 +32,13 @@
 		const canvas = document.getElementsByTagName('canvas')[0];
 		const gameContext = canvas?.getContext('2d');
 		const game = new GameEngine(gameContext!, CANVAS_SIZE.width, CANVAS_SIZE.height, finish);
-		setInterval(() => game.update(), 1000 / 60); //60fps
+		gameInterval = setInterval(() => game.update(), 1000 / 60); //60fps
 	});
 
 	onDestroy(() => {
 		unsubscribeScore();
 		unsubscribeTelegram();
+		clearInterval(gameInterval);
 	});
 </script>
 
