@@ -2,7 +2,7 @@ import { img } from './Img';
 
 export class Bird {
 	game_context: CanvasRenderingContext2D;
-	sprites: { [name: string]: HTMLImageElement };
+	sprites: { [name: string]: HTMLImageElement[] };
 	image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
@@ -14,6 +14,7 @@ export class Bird {
 	speed: number = 4;
 
 	current_animation_frame: number = 0;
+	current_animation_sprite: number = 0;
 
 	constructor(game_context: CanvasRenderingContext2D, max_width: number, max_height: number) {
 		this.game_context = game_context;
@@ -24,10 +25,16 @@ export class Bird {
 		this.addEventListeners();
 
 		this.sprites = {
-			down: img('fugl_ned.png'),
-			up: img('fugl_opp.png'),
+			alive: [
+				img('fugl/0.png'),
+				img('fugl/1.png'),
+				img('fugl/2.png'),
+				img('fugl/3.png'),
+				img('fugl/4.png'),
+				img('fugl/5.png'),
+			],
 		};
-		this.image = this.sprites.down;
+		this.image = this.sprites.alive[0];
 	}
 
 	update(game_over: boolean) {
@@ -42,7 +49,9 @@ export class Bird {
 	animate() {
 		this.current_animation_frame = (this.current_animation_frame + 1) % 4;
 		if (this.current_animation_frame === 0) {
-			this.image = this.image === this.sprites.up ? this.sprites.down : this.sprites.up;
+			this.current_animation_sprite =
+				(this.current_animation_sprite + 1) % this.sprites.alive.length;
+			this.image = this.sprites.alive[this.current_animation_sprite];
 		}
 	}
 
