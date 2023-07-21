@@ -90,6 +90,10 @@
 </section>
 
 <style>
+	section {
+		padding: 1rem;
+	}
+
 	h1 {
 		width: 100%;
 	}
