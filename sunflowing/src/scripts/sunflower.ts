@@ -68,6 +68,10 @@ export class Sunflower {
 		return this.position < -this.image.width;
 	}
 
+	getHitboxPosition() {
+		return this.position + this.image.width / 2;
+	}
+
 	die() {
 		this.image = this.sprites.dead;
 	}

@@ -45,7 +45,7 @@ export class GameEngine {
 
 		this.sunflowers.forEach((flower) => {
 			if (
-				flower.position < this.bird.horizontal_position + this.bird.image.width &&
+				flower.getHitboxPosition() < this.bird.horizontal_position + this.bird.image.width &&
 				!flower.collision_checked
 			) {
 				if (this.bird.vertical_position + this.bird.top_of_hitbox < flower.vertical_position) {
