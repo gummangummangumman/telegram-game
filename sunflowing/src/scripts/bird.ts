@@ -1,17 +1,25 @@
 import { img } from './Img';
 
 export class Bird {
+	//game stuff
 	game_context: CanvasRenderingContext2D;
-	sprites: { [name: string]: HTMLImageElement[] };
-	image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
-	horizontal_position: number = 100;
 
-	vertical_position: number; //highest point of sprite
-	going_up: boolean;
+	//static bird stuff
+	sprites: { [name: string]: HTMLImageElement[] };
+	image: HTMLImageElement;
+
+	horizontal_position: number = 100;
+	//hitboxes are defined from vertical_position, so from highest point and down
+	top_of_hitbox: number = 24;
+	bottom_of_hitbox: number = this.top_of_hitbox + 26;
 
 	speed: number = 4;
+
+	//dynamic bird stuff
+	vertical_position: number; //highest point of sprite
+	going_up: boolean;
 
 	current_animation_frame: number = 0;
 	current_animation_sprite: number = 0;
