@@ -8,7 +8,7 @@ export class Bird {
 	max_width: number;
 	horizontal_position: number = 100;
 
-	vertical_position: number;
+	vertical_position: number; //highest point of sprite
 	going_up: boolean;
 
 	speed: number = 4;
@@ -61,7 +61,10 @@ export class Bird {
 			this.vertical_position = Math.max(this.vertical_position, 0);
 		} else {
 			this.vertical_position += this.speed;
-			this.vertical_position = Math.min(this.vertical_position, this.max_height - 20);
+			this.vertical_position = Math.min(
+				this.vertical_position,
+				this.max_height - this.image.height
+			);
 		}
 	}
 
