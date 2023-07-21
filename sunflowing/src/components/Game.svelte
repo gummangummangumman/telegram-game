@@ -70,6 +70,7 @@
 			width: auto;
 			height: auto;
 			max-width: 100%;
+			border-style: solid none;
 		}
 	}
 
