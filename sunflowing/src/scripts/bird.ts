@@ -15,7 +15,7 @@ export class Bird {
 	top_of_hitbox: number = 24;
 	bottom_of_hitbox: number = this.top_of_hitbox + 26;
 
-	speed: number = 4;
+	speed: number = 6;
 
 	//dynamic bird stuff
 	vertical_position: number; //highest point of sprite

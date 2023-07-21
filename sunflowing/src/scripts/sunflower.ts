@@ -12,7 +12,7 @@ export class Sunflower {
 	vertical_position: number;
 
 	speed: number = 2;
-	added_speed_each_sunflower: number = 0.2;
+	added_speed_each_sunflower: number = 1;
 
 	collision_checked: boolean = false;
 
@@ -25,7 +25,7 @@ export class Sunflower {
 		this.game_context = game_context;
 		this.max_width = max_width;
 		this.max_height = max_height;
-		this.gap_between_flowers = max_height / 10;
+		this.gap_between_flowers = max_height / 6;
 		this.position = max_width;
 		this.vertical_position = Math.floor(Math.random() * this.max_height);
 		this.speed += this.added_speed_each_sunflower * sunflower_id;
