@@ -104,7 +104,8 @@
 	}
 
 	.highscore_list {
-		width: 80vw;
+		margin-left: 10vw;
+		margin-right: 10vw;
 		font-size: 22px;
 	}
 
