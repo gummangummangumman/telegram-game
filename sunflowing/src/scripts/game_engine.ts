@@ -61,6 +61,7 @@ export class GameEngine {
 					this.finish();
 				} else {
 					scoreStore.update((n) => Math.min(5, n + 1));
+					flower.pass();
 				}
 
 				flower.collision_checked = true;

@@ -32,6 +32,7 @@ export class Sunflower {
 
 		this.sprites = {
 			alive: img('solsikke.png'),
+			passed: img('solsikke_glad.png'),
 			dead: img('solsikke_dead.png'),
 		};
 		this.image = this.sprites.alive;
@@ -69,5 +70,9 @@ export class Sunflower {
 
 	die() {
 		this.image = this.sprites.dead;
+	}
+
+	pass() {
+		this.image = this.sprites.passed;
 	}
 }

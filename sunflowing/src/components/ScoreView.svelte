@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Highscore } from 'src/types/Highscores';
+	import type { Highscore } from '../types/Highscores';
 
 	export let highscore: Highscore;
 
