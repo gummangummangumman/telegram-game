@@ -3,7 +3,7 @@
 	import { _, init, addMessages } from 'svelte-i18n';
 	import i18n from '../i18n/i18n';
 	import Game from '../components/Game.svelte';
-	import { gameStore, telegramStore } from '../store/stores.js';
+	import { gameStore } from '../store/stores.js';
 	import GameOver from '../components/GameOver.svelte';
 
 	function i18nSetup() {
@@ -26,13 +26,6 @@
 			initialLocale: lang,
 			fallbackLocale: 'en',
 		});
-
-		// @ts-ignore
-		if (Object.keys(TelegramGameProxy?.initParams).length === 0) {
-			telegramStore.set(false);
-		} else {
-			telegramStore.set(true);
-		}
 	});
 
 	let gameActive: boolean;
@@ -45,7 +38,7 @@
 
 <svelte:head>
 	<title>{$_('title')}</title>
-	<meta name="description" content="GuMMaN's epic telegram game" />
+	<meta name="description" content={$_('description')} />
 </svelte:head>
 
 <section>

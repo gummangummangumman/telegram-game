@@ -41,6 +41,13 @@
 	};
 
 	onMount(() => {
+		// @ts-ignore
+		if (Object.keys(TelegramGameProxy?.initParams).length === 0) {
+			telegramStore.set(false);
+		} else {
+			telegramStore.set(true);
+		}
+
 		if (usingTelegram) {
 			fetch_scores();
 		}
