@@ -65,7 +65,7 @@
 		border: solid;
 	}
 
-	@media (max-width: 550px) {
+	@media (max-width: 768px) {
 		canvas {
 			width: auto;
 			height: auto;

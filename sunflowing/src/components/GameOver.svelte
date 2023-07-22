@@ -120,6 +120,12 @@
 		font-size: 22px;
 	}
 
+	@media (min-width: 768px) {
+		.highscore_list {
+			min-width: 30rem;
+		}
+	}
+
 	li {
 		color: transparent;
 	}
