@@ -55,7 +55,7 @@ export class Bird {
 	}
 
 	animate() {
-		this.current_animation_frame = (this.current_animation_frame + 1) % 4;
+		this.current_animation_frame = (this.current_animation_frame + 1) % 3;
 		if (this.current_animation_frame === 0) {
 			this.current_animation_sprite =
 				(this.current_animation_sprite + 1) % this.sprites.alive.length;
