@@ -48,14 +48,19 @@ export class GameEngine {
 				flower.getHitboxPosition() < this.bird.horizontal_position + this.bird.image.width &&
 				!flower.collision_checked
 			) {
-				if (this.bird.vertical_position + this.bird.top_of_hitbox < flower.vertical_position) {
+				if (
+					this.bird.vertical_position + this.bird.top_of_hitbox <
+					flower.vertical_position - flower.hitbox_leniency
+				) {
+					//collide with upper flower
 					this.dead = true;
 					flower.die();
 					this.finish();
 				} else if (
 					this.bird.vertical_position + this.bird.bottom_of_hitbox >
-					flower.vertical_position + flower.gap_between_flowers
+					flower.vertical_position + flower.gap_between_flowers + flower.hitbox_leniency
 				) {
+					//collide with lower flower
 					this.dead = true;
 					flower.die();
 					this.finish();

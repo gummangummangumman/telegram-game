@@ -6,7 +6,9 @@ export class Sunflower {
 	image: HTMLImageElement;
 	max_height: number;
 	max_width: number;
+
 	gap_between_flowers: number;
+	hitbox_leniency: number = 60; //how many vertical pixels "inside" of the sprite should not count for collisions
 
 	position: number;
 	vertical_position: number;
