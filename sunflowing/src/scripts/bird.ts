@@ -16,6 +16,7 @@ export class Bird {
 	bottom_of_hitbox: number = this.top_of_hitbox + 26;
 
 	speed: number = 8;
+	added_speed_each_sunflower: number = 0.5;
 
 	//dynamic bird stuff
 	vertical_position: number; //highest point of sprite
@@ -78,6 +79,10 @@ export class Bird {
 
 	should_be_deleted() {
 		return this.vertical_position < -this.image.width;
+	}
+
+	pass() {
+		this.speed += this.added_speed_each_sunflower;
 	}
 
 	//input controls
