@@ -13,7 +13,7 @@ export class Sunflower {
 	position: number;
 	vertical_position: number;
 
-	speed: number = 2;
+	speed: number = 4;
 	added_speed_each_sunflower: number = 0.5;
 
 	collision_checked: boolean = false;
