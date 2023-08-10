@@ -63,8 +63,7 @@
 		z-index: 1;
 		width: 480px;
 		border: solid;
-		background-image: url('/bakgrunn.png');
-		background-size: contain;
+		background-image: linear-gradient(180deg, #00adc4 20%, #b8d8de 100%);
 	}
 
 	@media (max-width: 768px) {

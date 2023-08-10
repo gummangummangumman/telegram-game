@@ -1,9 +1,11 @@
 import { Bird } from './bird';
 import { Sunflower } from './sunflower';
 import { scoreStore } from '../store/stores';
+import { Background } from './background';
 
 export class GameEngine {
 	game_context: CanvasRenderingContext2D;
+	background: Background;
 	bird: Bird;
 	sunflowers: Sunflower[];
 	max_height: number;
@@ -23,6 +25,7 @@ export class GameEngine {
 		finish: Function
 	) {
 		this.game_context = game_context;
+		this.background = new Background(game_context, max_width, max_height);
 		this.bird = new Bird(game_context, max_width, max_height);
 		this.sunflowers = [];
 		this.max_width = max_width;
@@ -40,6 +43,7 @@ export class GameEngine {
 
 	update() {
 		this.game_context.clearRect(0, 0, this.max_width, this.max_height);
+		this.background.update(this.dead);
 		this.update_sunflowers();
 		this.bird.update(this.dead);
 
