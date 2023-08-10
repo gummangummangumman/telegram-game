@@ -63,6 +63,8 @@
 		z-index: 1;
 		width: 480px;
 		border: solid;
+		background-image: url('/bakgrunn.png');
+		background-size: contain;
 	}
 
 	@media (max-width: 768px) {
