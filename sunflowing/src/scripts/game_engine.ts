@@ -69,7 +69,7 @@ export class GameEngine {
 					flower.die();
 					this.finish();
 				} else {
-					scoreStore.update((n) => Math.min(5, n + 1));
+					scoreStore.update((n) => n + 1);
 					flower.pass();
 					this.bird.pass();
 				}
