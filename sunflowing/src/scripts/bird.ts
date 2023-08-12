@@ -12,8 +12,8 @@ export class Bird {
 
 	horizontal_position: number = 100;
 	//hitboxes are defined from vertical_position, so from highest point and down
-	top_of_hitbox: number = 24;
-	bottom_of_hitbox: number = this.top_of_hitbox + 26;
+	top_of_hitbox: number = 25;
+	bottom_of_hitbox: number = this.top_of_hitbox + 40;
 
 	speed: number = 8;
 	added_speed_each_sunflower: number = 0.5;
