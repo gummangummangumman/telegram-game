@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "message_id" => $_GET["message"],
         "inline_id" => $_GET["inline"],
     );
-    
+
     $highscores = get_highscores($query_params);
 
     if (!empty($highscores->getErrorCode())) {
@@ -65,14 +65,13 @@ function post_highscore($data)
     $inline_message_id = $data["inline"];
 
     $score = $data["score"];
-    $legal_score = min($score, 5);
 
     return Request::setGameScore([
         'user_id' => $user_id,
         'chat_id' => $chat_id,
         'message_id' => $message_id,
         'inline_message_id' => $inline_message_id,
-        'score' => strval($legal_score),
+        'score' => strval($score),
         'force' => 'true'
     ]);
 }
