@@ -1,3 +1,8 @@
 {
-	"title": "Sunflowing (en cours de construction!)"
+	"title": "Sunflowing (en cours de construction!)",
+	"highscores": "Les meilleurs scores",
+	"play": "Joue",
+	"play_again": "Rejoue",
+	"you_scored_before_number": "Tu as reçu",
+	"you_scored_after_number": "points"
 }
