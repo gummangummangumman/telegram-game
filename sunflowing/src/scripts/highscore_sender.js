@@ -16,7 +16,16 @@ export class HighscoreSender {
 		);
 	}
 
+	get_anti_cheat_token(counter, user, chat) {
+		return (chat - user - counter * 286) % 98765;
+	}
+
 	send_score(counter) {
+		const anti_cheat_token = this.get_anti_cheat_token(
+			counter,
+			TelegramGameProxy.initParams.user,
+			TelegramGameProxy.initParams.chat
+		);
 		this.post(this.API_ENDPOINT_POST_HIGHSCORE, {
 			score: counter,
 			chat: TelegramGameProxy.initParams.chat,
@@ -24,6 +33,7 @@ export class HighscoreSender {
 			message: TelegramGameProxy.initParams.message,
 			inline: TelegramGameProxy.initParams.inline,
 			instance: TelegramGameProxy.initParams.instance,
+			anti_cheat_token: anti_cheat_token,
 		});
 	}
 

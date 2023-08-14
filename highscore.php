@@ -29,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return;
     }
 
+    if (!passes_cheat_check($update_array)) {
+        http_response_code(403);
+        $error = new stdClass();
+        $anti_cheat_value = $anti_cheat_value = (($update_array["chat"] - $update_array["user"] - $update_array["score"] * 286) % 98765);
+        $error->error = "This looks like cheating!";
+
+        echo json_encode($error);
+        return;
+    }
+
     $response = post_highscore($update_array);
 
     if (!empty($response->getErrorCode())) {
@@ -55,7 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     return;
 }
 
+function passes_cheat_check($data)
+{
+    $chat = intval($data["chat"]);
+    $user_id = intval($data["user"]);
+    $score = $data["score"];
 
+    $anti_cheat_value = (($chat - $user_id - $score * 286) % 98765);
+
+    return $data["anti_cheat_token"] == $anti_cheat_value;
+}
 
 function post_highscore($data)
 {
