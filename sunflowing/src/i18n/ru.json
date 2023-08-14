@@ -2,6 +2,6 @@
 	"highscores": "Рекорды",
 	"play": "Играть",
 	"play_again": "Играть снова",
-	"you_scored_before_number": "Ты получил",
-	"you_scored_after_number": "пункты"
+	"you_scored_before_number": "ты набрал",
+	"you_scored_after_number": " "
 }
