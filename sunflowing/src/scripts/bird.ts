@@ -39,8 +39,8 @@ export class Bird {
 				img('fugl/1.png'),
 				img('fugl/2.png'),
 				img('fugl/3.png'),
-				img('fugl/4.png'),
-				img('fugl/5.png'),
+				img('fugl/2.png'),
+				img('fugl/1.png'),
 			],
 		};
 		this.image = this.sprites.alive[0];
