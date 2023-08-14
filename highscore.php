@@ -72,7 +72,7 @@ function post_highscore($data)
         'message_id' => $message_id,
         'inline_message_id' => $inline_message_id,
         'score' => strval($score),
-        'force' => 'true'
+        'force' => 'false'
     ]);
 }
 
