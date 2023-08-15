@@ -40,6 +40,12 @@
 			});
 	};
 
+	const handleKeyup = (event: KeyboardEvent) => {
+		if (event.key === ' ') {
+			startNewGame();
+		}
+	};
+
 	onMount(() => {
 		// @ts-ignore
 		if (Object.keys(TelegramGameProxy?.initParams).length === 0) {
@@ -51,6 +57,9 @@
 		if (usingTelegram) {
 			fetch_scores();
 		}
+
+		document.addEventListener('keyup', handleKeyup);
+		return () => document.removeEventListener('keyup', handleKeyup);
 	});
 
 	onDestroy(() => {
