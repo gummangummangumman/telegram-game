@@ -38,5 +38,6 @@
 		position: relative;
 		right: 0%;
 		float: right;
+		margin-left: 24px;
 	}
 </style>
