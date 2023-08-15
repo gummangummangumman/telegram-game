@@ -103,6 +103,7 @@
 	{/if}
 
 	<button on:click={startNewGame}>{hasAlreadyPlayed ? $_('play_again') : $_('play')}</button>
+	<p class="hint">{$_('play_again_spacebar_hint')}</p>
 </section>
 
 <style>
@@ -133,6 +134,16 @@
 		.highscore_list {
 			min-width: 30rem;
 		}
+	}
+
+	@media (max-width: 768px) {
+		.hint {
+			display: none;
+		}
+	}
+
+	.hint {
+		opacity: 0.5;
 	}
 
 	li {

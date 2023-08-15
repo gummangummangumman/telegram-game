@@ -4,6 +4,7 @@
 	"highscores_no_telegram": "Spill spillet på Telegram for å lagre din beste poensum eller for å konkurrere mot venner! Finn det på ",
 	"play": "Spill",
 	"play_again": "Spill igjen",
+	"play_again_spacebar_hint": "mellomrom starter også spillet",
 	"you_scored_before_number": "Du fikk",
 	"you_scored_after_number": "poeng"
 }

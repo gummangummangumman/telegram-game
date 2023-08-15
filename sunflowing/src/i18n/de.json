@@ -1,6 +1,7 @@
 {
 	"play": "Spielen",
 	"play_again": "Nochmal spielen",
+	"play_again_spacebar_hint": "Die Leertaste startet auch das Spiel",
 	"you_scored_before_number": "Du hast",
 	"you_scored_after_number": "Punkte erreicht"
 }
