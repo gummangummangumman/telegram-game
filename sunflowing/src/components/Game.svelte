@@ -54,6 +54,7 @@
 	section {
 		width: 100%;
 		width: 100%;
+		user-select: none;
 	}
 
 	canvas {
@@ -61,6 +62,7 @@
 		margin: 0 auto;
 		margin-bottom: -4px;
 		z-index: 1;
+		user-select: none;
 		width: 480px;
 		border: solid;
 		background-image: linear-gradient(180deg, #00adc4 20%, #d0dfe2 100%);
