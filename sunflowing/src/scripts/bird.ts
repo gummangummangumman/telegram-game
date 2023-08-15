@@ -93,14 +93,22 @@ export class Bird {
 		document.addEventListener('keyup', () => {
 			this.going_up = false;
 		});
-		document.addEventListener('mousedown', () => {
+		document.addEventListener('mousedown', (event) => {
 			this.going_up = true;
+			//disable selection
+			if (event.detail > 1) {
+				event.preventDefault();
+			}
 		});
 		document.addEventListener('mouseup', () => {
 			this.going_up = false;
 		});
-		document.addEventListener('touchstart', () => {
+		document.addEventListener('touchstart', (event) => {
 			this.going_up = true;
+			//disable selection
+			if (event.detail > 1) {
+				event.preventDefault();
+			}
 		});
 		document.addEventListener('touchend', () => {
 			this.going_up = false;
