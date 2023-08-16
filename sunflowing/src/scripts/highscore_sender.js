@@ -33,6 +33,7 @@ export class HighscoreSender {
 			message: TelegramGameProxy.initParams.message,
 			inline: TelegramGameProxy.initParams.inline,
 			instance: TelegramGameProxy.initParams.instance,
+			user_secret: TelegramGameProxy.initParams.user_secret,
 			anti_cheat_token: anti_cheat_token,
 		});
 	}
