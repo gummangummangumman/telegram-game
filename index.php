@@ -29,10 +29,12 @@ if (!empty($callback_query_id)) {
     $chat_id = $update_array["callback_query"]["message"]["chat"]["id"];
     $inline_message_id = $update_array["callback_query"]["inline_message_id"];
 
+    $user_secret = md5($user_id . $chat_id . $bot_token);
+
     return Request::answerCallbackQuery([
         'callback_query_id' => $callback_query_id,
         'url' => $game_url . "#message=" . $message_id . "&inline=" . $inline_message_id . "&instance=" . $chat_instance .
-        "&user=" . $user_id . "&chat=" . $chat_id . "&lang=" . $language_code,
+        "&user=" . $user_id . "&chat=" . $chat_id . "&lang=" . $language_code . "&user_secret=" . $user_secret,
     ]);
 }
 
