@@ -29,10 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return;
     }
 
+    if (!passes_identification_check($update_array)) {
+        http_response_code(403);
+        $error = new stdClass();
+        $error->error = "This looks like identify theft!";
+
+        echo json_encode($error);
+        return;
+    }
+
     if (!passes_cheat_check($update_array)) {
         http_response_code(403);
         $error = new stdClass();
-        $anti_cheat_value = $anti_cheat_value = (($update_array["chat"] - $update_array["user"] - $update_array["score"] * 286) % 98765);
         $error->error = "This looks like cheating!";
 
         echo json_encode($error);
@@ -63,6 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo $highscores;
     return;
+}
+
+function passes_identification_check($data)
+{
+    global $bot_token;
+    $chat_id = $data["chat"];
+    $user_id = $data["user"];
+    $user_secret = $data["user_secret"];
+
+    return $user_secret == md5($user_id . $chat_id . $bot_token);
 }
 
 function passes_cheat_check($data)
